@@ -1,2 +1,0 @@
-#SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://{username}:{passW}@localhost:3306/{dbN}'.format(username='aragon',passW='1234',dbN='contables-test')
-SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://{username}:{passW}@localhost:3306/{dbN}'.format(username='root',passW='',dbN='contables-test')
