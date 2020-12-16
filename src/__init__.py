@@ -20,12 +20,16 @@ def create_app(settings_module):
     else:
         app.config.from_pyfile('config.py', silent=True)
 
-    configure_logging(app)
+    #configure_logging(app)
 
     #Indicamos donde debe hacer login
-    login_manager.init_app(app)
-    login_manager.login_view("routes.login")
+    #login_manager.init_app(app)
+    #login_manager.login_view("routes.login")
 
     #Iniciamos la db
     db.init_app(app)
-    
+
+    from .routes import bp
+    app.register_blueprint(bp)
+
+    return app

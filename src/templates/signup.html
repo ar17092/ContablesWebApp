@@ -1,0 +1,85 @@
+{% extends 'base_template.html' %}
+
+{% block title %} ContApp | Regístrate{%endblock%}
+
+{% block content %}
+
+<div class="container-sm col-md-8 mt-5 shadow bg-light rounded text-dark">
+  <br>  
+  <form class="row g-3">
+        <div class="col-md-4">
+          <label for="validationDefault01" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="validationDefault01" placeholder="name" required>
+        </div>
+        <div class="col-md-4">
+          <label for="validationDefault02" class="form-label">Apellido</label>
+          <input type="text" class="form-control" id="validationDefault02" placeholder="last name" required>
+        </div>
+        <div class="col-md-4">
+          <label for="validationDefaultUsername" class="form-label">Username</label>
+          <div class="input-group">
+            <span class="input-group-text" id="inputGroupPrepend2">@</span>
+            <input type="text" class="form-control" id="validationDefaultUsername"  aria-describedby="inputGroupPrepend2" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefault03" class="form-label">Password</label>
+          <input type="password" class="form-control" id="validationDefault03" placeholder="password" required>
+        </div>
+        <div class="col-md-6">
+            <label for="validationDefault03" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="validationDefault03" placeholder="confirm password" required>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="validationDefault04">Selecciona tu empresa</label>
+          <select class="custom-select" id="validationDefault04" required>
+            <option selected disabled value="">Choose...</option>
+            <option>...</option>
+          </select>
+        </div>
+        <br>
+        <div class="col-12 mb-3 ">
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#staticBackdrop">
+            Agregar empresa
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Nueva empresa</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="exampleFormControlInput1">Nombre de la Empresa</label>
+                      <input type="empresa" class="form-control" id="exampleFormControlInput1" required>
+                    </div>
+                    <label for="validationDefault04">Selecciona el rubro</label>
+                    <select class="custom-select" id="validationDefault04" required>
+                      <option selected disabled value="">Choose...</option>
+                      <option>...</option>
+                    </select>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="col-md-8">
+          <button class="btn btn-success" type="submit">Registrar</button>
+        </div>
+      </form>
+      <br>
+</div>
+
+{%endblock%}

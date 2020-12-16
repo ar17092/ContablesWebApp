@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-bp = Blueprint('bp', __name__, template_folder="templates")
+bp = Blueprint('routes', __name__)
 
-from . import *
+from . import index_view,login_view,signup_view

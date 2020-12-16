@@ -1,0 +1,65 @@
+{% extends 'base_template.html' %}
+
+{% block title%}Login | ContApp{%endblock%}
+
+{% block content %}
+
+<div class="modal-dialog text-center">
+  <div class="col-sm-12 ">
+    <div class="modal-content ">
+      <div class="col-12 user-img">
+        <img src="{{url_for('static', filename='images/avatar.png')}}" alt="">
+      </div>
+      <form class="col-12 text-dark">
+        <br>  
+        <div class="mb-3">
+            <input type="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
+          </div>
+          <div class="mb-3">
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" >
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Recordar contraseña</label>
+          </div>
+          <div class="cotainer">
+            ¿No tienes cuenta? <a href="{{url_for('routes.signup_form')}}">Regístrate</a>
+          </div>
+          <div class="mb-3" > 
+            <br>
+              <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i>  Sign in</button>
+          </div>
+          <br>
+      </form>
+    </div>
+  </div>
+</div>
+{%endblock%}
+
+{# 
+  <form>
+    <div class="container-sm col-md-8 mt-5 shadow bg-light rounded text-dark">
+      <br>  
+      <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">User name</label>
+          <input type="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <div class="cotainer">
+          ¿No tienes cuenta? <a href="{{url_for('routes.signup_form')}}">Regístrate</a>
+        </div>
+        <div class="mb-3" > 
+            <button type="submit" class="btn btn-primary">Sign in</button>
+        </div>
+        <br>
+    </div>  
+</form>
+  #}
