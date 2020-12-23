@@ -10,17 +10,18 @@
       <div class="col-12 user-img">
         <img src="{{url_for('static', filename='images/avatar.png')}}" alt="">
       </div>
-      <form class="col-12 text-dark">
+      
+      <form class="col-12 text-dark"  method="POST" >
         <br>  
         <div class="mb-3">
-            <input type="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username">
+            <input type="username" class="form-control" name="username" placeholder="Username" required>
           </div>
           <div class="mb-3">
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" >
+            <input type="password" class="form-control" name="contrasenia" placeholder="Password" required>
           </div>
           <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Recordar contraseña</label>
+            <input type="checkbox" name="recordar" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Recordar</label>
           </div>
           <div class="cotainer">
             ¿No tienes cuenta? <a href="{{url_for('routes.signup_form')}}">Regístrate</a>

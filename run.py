@@ -1,4 +1,4 @@
-from src import create_app
+from app import create_app
 import os
 
 settings_module= os.getenv('APP_SETTINGS_MODULE')
