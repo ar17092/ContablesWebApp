@@ -7,13 +7,17 @@ from  app.models.sub_cuenta import Subcuenta
 from app.models.tipo_cuenta import Tipo_Cuenta
 from app.routes.decorator.decorators import admin_require
 from app.routes import bp
-from app.forms.cuentas import TipocuentaForm, CuentaForm
+from app.forms.cuentas import TipocuentaForm, CuentaForm, SubcuentaForm
 
 @bp.route('/admin/')
 @login_required
 @admin_require
 def home():
     return render_template('admin/index.html')
+
+#-------------------------------------------------------------------------------------------------------------------------------------------#
+#-------------------------------------------------------------------------------------------------------------------------------------------#
+#-------------------------------------------------------------------------------------------------------------------------------------------#
 
 @bp.route('/admin/newcuenta',methods=['GET','POST'])
 @login_required
@@ -68,11 +72,54 @@ def delete_cuenta(id_cuenta):
 #-------------------------------------------------------------------------------------------------------------------------------------------#
 #-------------------------------------------------------------------------------------------------------------------------------------------#
 
-@bp.route('/admin/newsubcuenta')
+@bp.route('/admin/newsubcuenta',methods=['GET','POST'])
 @login_required
 @admin_require
-def crud_subcuenta():
-    return render_template('admin/subcuenta.html')
+def new_subcuenta():
+    subcuentas = Subcuenta.get_all()
+    c = Cuenta.get_all()
+    form = SubcuentaForm()
+    form.id_cuenta.choices=[(sc.id_cuenta,sc.nombre) for sc in c]
+
+    if form.validate_on_submit():
+        nombre = form.nombre.data
+        info = form.descripcion.data
+        id_c = form.id_cuenta.data
+
+        subcuenta = Subcuenta(nombre=nombre, descripcion=info, id_cuenta=id_c)
+        subcuenta.save()
+        return redirect(url_for('routes.new_subcuenta'))      
+    return render_template('admin/subcuenta.html', form=form,subcuentas=subcuentas)
+
+@bp.route('/admin/updatesubcuenta/<int:id_subcuenta>', methods=['GET','POST',], )
+@login_required
+@admin_require
+def update_subcuenta(id_subcuenta):
+    subcuentas = Subcuenta.get_all()
+    subcuenta = Subcuenta.get_by_id(id_subcuenta)
+    if subcuenta is None:
+        abort(404)
+    c = Cuenta.get_all()
+    form = SubcuentaForm(obj = subcuenta)
+    form.id_cuenta.choices=[(sc.id_cuenta,sc.nombre) for sc in c]
+    if form.validate_on_submit():
+        subcuenta.nombre = form.nombre.data
+        subcuenta.descripcion = form.descripcion.data
+        subcuenta.id_tipocuenta = form.id_cuenta.data
+        subcuenta.save()
+        return redirect(url_for('routes.new_subcuenta'))
+    return render_template('admin/subcuenta.html',form=form, subcuenta = subcuenta,subcuentas=subcuentas)
+
+@bp.route('/admin/deletesubcuenta/<int:id_subcuenta>', methods=['POST',])
+@login_required
+@admin_require
+def delete_subcuenta(id_subcuenta):
+    subcuenta = Subcuenta.get_by_id(id_subcuenta)
+    if subcuenta is None:
+        abort(404)
+    subcuenta.delete()
+
+    return redirect(url_for('routes.new_subcuenta'))
 
 #-------------------------------------------------------------------------------------------------------------------------------------------#
 #-------------------------------------------------------------------------------------------------------------------------------------------#
