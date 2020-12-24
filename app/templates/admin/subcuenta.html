@@ -29,7 +29,7 @@
                         <small id="emailHelp" class="form-text text-muted"></small>
                     </div>
                         
-                        {{form.submit()}}
+                        <button class="btn btn-success" type="submit">Agregar</button>
 		<br>                        
                 </div>
             </form>
@@ -59,12 +59,29 @@
         <div class="modal-content">
             <h5 class="modal-title text-dark text-center">Subcuentas</h5>
             <div class="list-group p-3 mb-5 bg-muted rounded" >
-                <a href="#" class="list-group-item list-group-item-action active bg-dark disabled" aria-disabled="true">
+                <a href="#" class="list-group-item disabled text-dark " aria-disabled="true">
                     Sub-cuentas existentes
                 </a>
-                {% for sc in subcuentas %}
-                <a href="{{ url_for('routes.update_subcuenta', id_subcuenta=sc.id_subcuenta) }}" class="list-group-item list-group-item-action"> {{ sc.nombre }} </a>
-                {% endfor %}
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Cuenta</th>
+                            <th scope="col">#</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sc in subcuentas %}
+                        <tr class="list-group-item-action" >
+                            <th scope="row">{{sc.nombre}}</th>
+                            <th scope="row">{{sc.descripcion}}</th>
+                            <th scope="row">{{sc.id_cuenta}}</th>
+                            <th scope><a href="{{ url_for('routes.update_subcuenta', id_subcuenta=sc.id_subcuenta) }}" class="btn btn-warning text-secondary">Ver</a></th>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
         </div>

@@ -13,7 +13,7 @@ class TipocuentaForm(FlaskForm):
 class CuentaForm(FlaskForm):
     nombre = StringField('Nombre cuenta', validators=[DataRequired(), Length(max=200)], render_kw={"type":"text","class":"form-control"})
     descripcion = TextAreaField('Descripción', render_kw={'class':'form-control'})
-    selector = SelectField('Tipo cuenta', choices=[], render_kw={'class':'custom-select'})
+    id_tipocuenta = SelectField('Tipo cuenta', choices=[], render_kw={'class':'custom-select'})
     submit = SubmitField('Agregar', render_kw={"class":"btn btn-success"})
 
 class SubcuentaForm(FlaskForm):

@@ -16,7 +16,7 @@ def home():
     return render_template('admin/index.html')
 
 #-------------------------------------------------------------------------------------------------------------------------------------------#
-#-------------------------------------------------------------------------------------------------------------------------------------------#
+#-------------------------------------------CRUD CUENTA FUNCIONAL---------------------------------------------------------------------------#
 #-------------------------------------------------------------------------------------------------------------------------------------------#
 
 @bp.route('/admin/newcuenta',methods=['GET','POST'])
@@ -26,12 +26,12 @@ def new_cuenta():
     cuentas = Cuenta.get_all()
     tc = Tipo_Cuenta.get_all()
     form = CuentaForm()
-    form.selector.choices=[(t.id_tipo_cuenta,t.nombre) for t in tc]
+    form.id_tipocuenta.choices=[(t.id_tipo_cuenta,t.nombre) for t in tc]
 
     if form.validate_on_submit():
         nombre = form.nombre.data
         info = form.descripcion.data
-        id_tc = form.selector.data
+        id_tc = form.id_tipocuenta.data
 
         cuenta = Cuenta(nombre=nombre, descripcion=info, id_tipocuenta=id_tc)
         cuenta.save()
@@ -48,11 +48,11 @@ def update_cuenta(id_cuenta):
         abort(404)
     tc = Tipo_Cuenta.get_all()
     form = CuentaForm(obj = cuenta)
-    form.selector.choices=[(t.id_tipo_cuenta,t.nombre) for t in tc]
+    form.id_tipocuenta.choices=[(t.id_tipo_cuenta,t.nombre) for t in tc]
     if form.validate_on_submit():
         cuenta.nombre = form.nombre.data
         cuenta.descripcion = form.descripcion.data
-        cuenta.id_tipocuenta = form.selector.data
+        cuenta.id_tipocuenta = form.id_tipocuenta.data
         cuenta.save()
         return redirect(url_for('routes.new_cuenta'))
     return render_template('admin/cuenta.html',form=form, cuenta = cuenta,cuentas=cuentas)
@@ -69,7 +69,7 @@ def delete_cuenta(id_cuenta):
     return redirect(url_for('routes.new_cuenta'))
 
 #-------------------------------------------------------------------------------------------------------------------------------------------#
-#-------------------------------------------------------------------------------------------------------------------------------------------#
+#-----------------------------------------CRUD SUBCUENTA FUNCIONAL--------------------------------------------------------------------------#
 #-------------------------------------------------------------------------------------------------------------------------------------------#
 
 @bp.route('/admin/newsubcuenta',methods=['GET','POST'])
@@ -122,7 +122,7 @@ def delete_subcuenta(id_subcuenta):
     return redirect(url_for('routes.new_subcuenta'))
 
 #-------------------------------------------------------------------------------------------------------------------------------------------#
-#-------------------------------------------------------------------------------------------------------------------------------------------#
+#-------------------------------------------------CRUD TIPOCUENTA FUNCIONAL-----------------------------------------------------------------#
 #-------------------------------------------------------------------------------------------------------------------------------------------#
 
 @bp.route('/admin/newtipocuenta', methods=['GET','POST',])
