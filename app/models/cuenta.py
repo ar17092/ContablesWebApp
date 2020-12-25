@@ -5,6 +5,7 @@ class Cuenta(db.Model):
     nombre = db.Column(db.String(100), nullable=False, unique=True)
     descripcion = db.Column(db.String(200))
     id_tipocuenta = db.Column(db.INTEGER, db.ForeignKey('tipo_cuenta.id_tipo_cuenta', ondelete='set null'))
+    tipo_cuenta = db.relationship('Tipo_Cuenta', backref='cuenta', lazy=True)
 
     def __repr__(self):
         return f'Cuenta {self.nombre}'

@@ -5,6 +5,7 @@ class Subcuenta(db.Model):
     nombre = db.Column(db.String(100), nullable=False, unique=True)
     descripcion = db.Column(db.String(200))
     id_cuenta = db.Column(db.INTEGER, db.ForeignKey('cuenta.id_cuenta', ondelete='set null'))
+    cuenta = db.relationship('Cuenta', backref='subcuenta', lazy=True)
 
     def __repr__(self):
         return f'Subcuenta {self.nombre}'

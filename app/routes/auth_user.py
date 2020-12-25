@@ -9,33 +9,35 @@ from app import login_manager
 
 @bp.route('/signup', methods=['GET','POST'])
 def signup_form():
-    form = SignupForm()
+    # form = SignupForm()
     error = None
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     
     if request.method == 'POST':
-        nombre = request.form['']
-        contrasenia = form.password2.data
-        username = form.username.data
+        nombre = request.form['nombre']
+        apellido = request.form['apellido']
+        username = request.form['username']
+        contrasenia = request.form['contrasenia1']
+        nombrecompleto= nombre+' '+apellido
     
-    user = User.get_by_userName(username)
-    if user is not None:
-          error= f'El username {username} ya esta siendo utilizado por otro usuario'
-    else:
-            #Agregamos al usuario
-            #user.check_password(password)
-            user = User(nombre = nombre, username=username)
-            user.set_password(contrasenia)
-            user.save()
+        user = User.get_by_userName(username)
+        if user is not None:
+            error= f'El username {username} ya esta siendo utilizado por otro usuario'
+        else:
+                #Agregamos al usuario
+                #user.check_password(password)
+                user = User(nombre = nombrecompleto, username=username)
+                user.set_password(contrasenia)
+                user.save()
 
-            login_user(user, remember=True)
-            siguienteP= request.args.get('next', None)
-            if not siguienteP or url_parse(siguienteP).netloc != '':
-                siguienteP = url_for('index')
-            return redirect(siguienteP)
+                login_user(user, remember=True)
+                siguienteP= request.args.get('next', None)
+                if not siguienteP or url_parse(siguienteP).netloc != '':
+                    siguienteP = url_for('routes.index')
+                return redirect(siguienteP)
 
-    return render_template('signup.html',form=form, error=error)
+    return render_template('auth/signup.html', error=error)
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -56,10 +58,9 @@ def login():
                 siguientePag= url_for('routes.index')
             return redirect(siguientePag)
         else:
-            flash('Username o contraseña incorretos')
-            #return redirect(url_for('routes.login'))
+            return f'Username o contraseña incorretos'
 
-    return render_template('login.html')
+    return render_template('auth/login.html')
 
 @bp.route('/logout')
 def logout():

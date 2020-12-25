@@ -29,27 +29,28 @@
                         <small id="emailHelp" class="form-text text-muted"></small>
                     </div>
                         
-                        <button class="btn btn-success" type="submit">Agregar</button>
+                        <button class="btn btn-success" type="submit"><i class="fas fa-plus-square"></i> Agregar</button>
 		<br>                        
                 </div>
             </form>
-            {% if subcuenta %}
+            
             <div class="modal-footer">
+                {% if subcuenta %}
                 <div class="">
                     <form action="{{ url_for('routes.delete_subcuenta', id_subcuenta=subcuenta.id_subcuenta) }}" method="post">
                         <br>
-                        <input href="{{url_for('routes.new_subcuenta')}}" type="submit" value="Eliminar" class="btn btn-danger" />
+                        <button class="btn btn-danger " type="submit" href="{{url_for('routes.new_subcuenta')}}"><i class="fas fa-trash-alt"></i> Eliminar</button>
                     </form>
                 </div>
+                {% endif %}
                 <div class="">
                     <form action="{{url_for('routes.new_subcuenta')}}">
                         <br>
-                        <button class="btn btn-secondary " type="submit">Cancelar</button>
+                        <button class="btn btn-secondary " type="submit"><i class="fas fa-window-close"></i> Cancelar</button>
                         <br>
                     </form>
                 </div>
             </div>
-            {% endif %}
             <br>
         </div>
         </div>
@@ -68,7 +69,7 @@
                             <th scope="col">Nombre</th>
                             <th scope="col">Descripción</th>
                             <th scope="col">Cuenta</th>
-                            <th scope="col">#</th>
+                            <th scope="col">Edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,8 +77,8 @@
                         <tr class="list-group-item-action" >
                             <th scope="row">{{sc.nombre}}</th>
                             <th scope="row">{{sc.descripcion}}</th>
-                            <th scope="row">{{sc.id_cuenta}}</th>
-                            <th scope><a href="{{ url_for('routes.update_subcuenta', id_subcuenta=sc.id_subcuenta) }}" class="btn btn-warning text-secondary">Ver</a></th>
+                            <th scope="row">{{sc.cuenta.nombre}}</th>
+                            <th scope><a href="{{ url_for('routes.update_subcuenta', id_subcuenta=sc.id_subcuenta) }}" class="btn btn-warning"><i class="far fa-edit"></i></a></th>
                         </tr>
                         {% endfor %}
                     </tbody>
