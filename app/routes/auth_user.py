@@ -1,8 +1,10 @@
 from flask import render_template,abort,request, url_for, redirect, flash
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app.models.usuario import User
-from app.forms.resgistros import LoginForm, SignupForm
+from app.models.empresa import Empresa
+from app.models.rubro import Rubro
+from app.forms.resgistros import EmpresaForm, RubroForm
 from . import bp
 
 from app import login_manager
@@ -41,6 +43,7 @@ def signup_form():
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
+    error=None
     if current_user.is_authenticated:
         return redirect(url_for('routes.index'))
 
@@ -58,9 +61,9 @@ def login():
                 siguientePag= url_for('routes.index')
             return redirect(siguientePag)
         else:
-            return f'Username o contraseña incorretos'
+            error = f'Username o contraseña incorretos'
 
-    return render_template('auth/login.html')
+    return render_template('auth/login.html', error=error)
 
 @bp.route('/logout')
 def logout():
@@ -71,3 +74,44 @@ def logout():
 @login_manager.user_loader
 def load_user(user_id):
     return User.get_by_id(int(user_id))
+
+
+@bp.route('/<string:username>/', methods=["GET","POST"])
+@login_required
+def profile(username):
+    print('Entre')
+    empresa=None
+    user = User.get_by_userName(username)
+    #miempresa = Empresa.get_by_id(id=user.empresa_id)
+    rb = Rubro.get_all()
+    form1 = EmpresaForm()
+    form1.id_rubro.choices=[(r.id_rubro, r.rubro) for r in rb]
+    form2 = RubroForm()
+    print('Apunto de entrar a form1')
+    if form1.validate_on_submit():
+        nombre_empresa = form1.name.data
+        id_rb = form1.id_rubro.data
+
+        empresa = Empresa(nombre=nombre_empresa,id_rubro=id_rb)
+        empresa.save()
+        user.empresa_id = empresa.id_empresa
+        user.save()
+        
+        return redirect(url_for('routes.profile', username=current_user.username))
+    print('Apunto de entrar a form2')
+    if form2.validate_on_submit():
+        nombre_rubro = form2.name.data
+        print('Valor del rubro ',nombre_rubro)
+        rubro = Rubro(rubro=nombre_rubro)
+        rubro.save()
+
+        return redirect(url_for('routes.profile', username = user.username))
+
+    return render_template('user/profile.html',user=user,form1=form1, form2=form2,empresa=empresa)
+
+# @bp.route('/addrubro', methods=["GET","POST"])
+# @login_required
+# def add_rubro():
+#     return 'hola'
+# #@bp.route('/<string:username>/', methods=["GET","POST"])
+# #@login_required

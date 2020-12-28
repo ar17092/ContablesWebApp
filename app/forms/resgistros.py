@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField
+from wtforms.fields.core import SelectField
 from wtforms.validators import DataRequired, Email, Length
 
 class SignupForm(FlaskForm):
@@ -14,9 +15,11 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()],render_kw={"type":"password","class":"form-control", "id":"exampleInputPassword1"})
     remember_me = BooleanField('Recuérdame',render_kw={})
 
-class CompanyForm(FlaskForm):
-    pass
+class EmpresaForm(FlaskForm):
+    name = StringField('Nombre empresa', validators=[DataRequired(), Length(max=64)], render_kw={ "type":"text" ,"class":"form-control" ,"id":"formGroupExampleInput",'required':''})
+    id_rubro = SelectField('Rubro', choices=[], render_kw={'class':'custom-select'})
 
-class RubroFom(FlaskForm):
-    pass
+class RubroForm(FlaskForm):
+    name = StringField('Rubro', validators=[DataRequired(), Length(max=64)], render_kw={ "type":"text" ,"class":"form-control" ,"id":"formGroupExampleInput",'required':''})
+    submit= SubmitField('Agregar')
 

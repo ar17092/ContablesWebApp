@@ -33,7 +33,7 @@
 
         {% else %}
         <li class="nav-item">
-            <a class="nav-link" href="#">{{ current_user.nombre }}</a>
+            <a class="nav-link" href="{#{{url_for('routes.profile')}}#}">{{ current_user.nombre }}</a>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -54,6 +54,20 @@
       {% endif %}
     </div>
   </nav>
+  {% if current_user.is_admin %}
+  <div class="container mt-4  ">
+    <div class="btn-group">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+          Administación
+        </button>
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left">
+          <a href="{{url_for('routes.crud_tipocuenta')}}" class="btn btn-white dropdown-item">CRUD tipos de cuenta</a>
+          <a href="{{url_for('routes.new_cuenta')}}" class="btn btn-white dropdown-item">CRUD cuentas</a>
+          <a href="{{url_for('routes.new_subcuenta')}}" class="btn btn-white dropdown-item">CRUD subcuentas</a>
+        </div>
+      </div>
+</div>
+{% endif %}
       {% block content %}
       {% endblock %}
       <footer class="page-footer font-small blue mt-5" >

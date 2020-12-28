@@ -1,0 +1,79 @@
+{% extends 'base_template.html' %}
+
+{% block title %}Perfil{% endblock %}
+
+{% block content %}
+{% if not current_user.is_admin %}
+<div class="container mt-4">
+<div class="card text-dark">
+  <h5 class="card-header text-dark">Empresas de {{user.nombre}}</h5>
+  <div class="card-body">
+    <h5 class="card-title">Listado de empresas</h5>
+      <p class="card-text">{{ user.empresa.nombre }}</p>
+      
+    <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Agregar empresa</a>
+      <div class="collapse multi-collapse" id="multiCollapseExample1">
+          <br>
+          {# Boton para ventana modal #}
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#staticBackdrop">
+              Agregar rubro
+          </button>
+          {# Ventana Modal #}
+          <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="staticBackdropLabel">Nueva rubro</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          
+                          <form method="post">
+                            {{form2.hidden_tag()}}
+                              <div class="form-group">
+                                  {{ form2.name.label }}
+                                  {{ form2.name(size=64) }}
+                              </div>
+                              <button type="submit" class="btn btn-success">Agregar</button>
+                          </form>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {# Agregar empresa #}
+          <div class="modal-dialog">
+              <div class="modal-content text-dark">
+                  <div class="modal-header">
+                      <h5 class="modal-title"> Agregar nueva empresa </h5>
+                  </div>
+                  <div class="modal-body">
+                    
+                      <form method="post" action="">
+                        {{form1.hidden_tag()}}
+                          <div class="form-group">
+                              {{form1.name.label}}
+                              {{form1.name}}
+                          </div>
+                          <div class="form-group">
+                              {{form1.id_rubro.label}}
+                              {{form1.id_rubro}}
+                          </div>
+                          <br>
+                          <div class="modal-footer">
+                              <button type="submit" class="btn btn-success">Agregar</button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+{% endif %}
+{% endblock %}

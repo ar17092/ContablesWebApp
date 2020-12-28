@@ -3,4 +3,29 @@
 {% block title %}ContablesWebApp{%endblock%}
 
 {% block content %}
+
+<div class="modal-dialog">
+    <div class="modal-content text-dark">
+        <div class="modal-header">
+            <h5 class="modal-title"> Agregar nueva empresa </h5>
+        </div>
+        <div class="modal-body">
+            <form action="" method="POST">
+                {{form1.hidden_tag()}}
+                <div class="form-group">
+                    {{form1.name.label}}
+                    {{form1.name}}
+                </div>
+                <div class="form-group">
+                    {{form1.id_rubro.label}}
+                    {{form1.id_rubro}}
+                </div>
+                <br>
+                <button class="btn btn-success" type="submit">Agregar</button>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
 {%endblock%}

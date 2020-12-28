@@ -11,6 +11,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(128),nullable=False)
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresa.id_empresa', ondelete='set null'))
     is_admin = db.Column(db.Boolean, default=False)
+    empresa = db.relationship('Empresa', backref='empresa',lazy=True)
 
     def __repr__(self):
             return f'<User {self.username}>'

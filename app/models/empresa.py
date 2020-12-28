@@ -8,3 +8,21 @@ class Empresa(db.Model):
 
     def __repr__(self):
         return f'<Empresa {self.nombre}>'
+
+    def save(self):
+        if not self.id_empresa:
+            db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    @staticmethod
+    def get_all():
+        return Empresa.query.all()
+
+    @staticmethod
+    def get_by_id(id):
+        return Empresa.query.get(id)
+    
