@@ -1,25 +1,25 @@
 {% extends 'base_template.html' %}
 
-{% block title %}Perfil{% endblock %}
+{% block title %}Perfil | {{user.nombre}}{% endblock %}
 
 {% block content %}
 {% if not current_user.is_admin %}
 <div class="container mt-4">
 <div class="card text-dark">
-  <h5 class="card-header text-dark">Empresas de {{user.nombre}}</h5>
+  <h5 class="card-header text-dark">Empresa de {{user.nombre}}</h5>
   <div class="card-body">
-    <h5 class="card-title">Listado de empresas</h5>
-      <p class="card-text">{{ user.empresa.nombre }}</p>
-      
-    <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Agregar empresa</a>
-      <div class="collapse multi-collapse" id="multiCollapseExample1">
+    <h5 class="card-title"><a href="{{url_for('routes.librodiario')}}" class="list-group-item list-group-item-action bg-secondary text-white">{{ user.empresa.nombre }}</a></h5>
+    {% if not user.empresa.nombre %}
+    <a class="btn btn-primary" data-toggle="collapse" href="#mynewcompany" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Agregar empresa</a>
+    {% endif %}
+      <div class="collapse multi-collapse" id="mynewcompany">
           <br>
           {# Boton para ventana modal #}
-          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#staticBackdrop">
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#mynewcategory">
               Agregar rubro
           </button>
           {# Ventana Modal #}
-          <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal fade" id="mynewcategory" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
               <div class="modal-dialog">
                   <div class="modal-content">
                       <div class="modal-header">

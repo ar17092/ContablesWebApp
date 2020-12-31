@@ -12,6 +12,7 @@ class User(db.Model, UserMixin):
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresa.id_empresa', ondelete='set null'))
     is_admin = db.Column(db.Boolean, default=False)
     empresa = db.relationship('Empresa', backref='empresa',lazy=True)
+    ldiario = db.relationship('Libro_Diario', backref='libro__diario', lazy=True, cascade='all, delete-orphan')
 
     def __repr__(self):
             return f'<User {self.username}>'

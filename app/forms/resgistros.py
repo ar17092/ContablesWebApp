@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField
 from wtforms.fields.core import SelectField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms.fields.simple import TextAreaField
+from wtforms.validators import DataRequired,Length
 
 class SignupForm(FlaskForm):
     name = StringField('Nombre', validators=[DataRequired(), Length(max=64)], render_kw={ "type":"text" ,"class":"form-control" ,"id":"formGroupExampleInput", "placeholder":"Nombre/Apellido",'required':''})
@@ -23,3 +24,6 @@ class RubroForm(FlaskForm):
     name = StringField('Rubro', validators=[DataRequired(), Length(max=64)], render_kw={ "type":"text" ,"class":"form-control" ,"id":"formGroupExampleInput",'required':''})
     submit= SubmitField('Agregar')
 
+class LDiarioForm(FlaskForm):
+    name = name = StringField('Nombre Libro Diario', validators=[DataRequired(), Length(max=200)], render_kw={ "type":"text" ,"class":"form-control" ,"id":"ldiarioform",'required':''})
+    descripcion = TextAreaField('Descripción', render_kw={'class':'form-control'})
