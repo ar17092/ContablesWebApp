@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField
-from wtforms.fields.core import SelectField
+from wtforms.fields.core import DateField, SelectField
 from wtforms.fields.simple import TextAreaField
 from wtforms.validators import DataRequired,Length
 
@@ -27,3 +27,7 @@ class RubroForm(FlaskForm):
 class LDiarioForm(FlaskForm):
     name = name = StringField('Nombre Libro Diario', validators=[DataRequired(), Length(max=200)], render_kw={ "type":"text" ,"class":"form-control" ,"id":"ldiarioform",'required':''})
     descripcion = TextAreaField('Descripción', render_kw={'class':'form-control'})
+
+class PartidaForm(FlaskForm):
+    nombre = StringField('Nombre partida', validators=[DataRequired(), Length(max=200)], render_kw={ "type":"text" ,"class":"form-control" ,"id":"ldiarioform",'required':''})
+    fecha = DateField('Fecha')

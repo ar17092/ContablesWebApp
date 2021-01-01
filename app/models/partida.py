@@ -28,3 +28,7 @@ class Partida(db.Model):
     def get_by_id(id):
         return Partida.query.get(id)
     
+    @staticmethod
+    def get_by_id_ldiario(id_ldiario):
+        return Partida.query.filter_by(id_ldiario=id_ldiario)
+    

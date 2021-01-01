@@ -5,6 +5,7 @@ class Libro_Diario(db.Model):
     nombre = db.Column(db.String(200),nullable=False, unique=True)
     descripcion = db.Column(db.String(200))
     id_user= db.Column(db.INTEGER, db.ForeignKey('user.id', ondelete='set null'))
+    partida = db.relationship('Partida', backref='partida', lazy=True, cascade='all, delete-orphan')
 
     def __repr__(self):
         return f'Libro_Diario {self.nombre}'
@@ -29,3 +30,7 @@ class Libro_Diario(db.Model):
     @staticmethod
     def get_by_nombre(nombre):
         return Libro_Diario.query.filter_by(nombre=nombre).first()
+    
+    @staticmethod
+    def get_by_id_user(id_user):
+        return Libro_Diario.query.filter_by(id_user=id_user).first()
