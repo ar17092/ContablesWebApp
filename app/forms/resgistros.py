@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField
-from wtforms.fields.core import DateField, SelectField
+from wtforms.fields.core import DateField, SelectField,FloatField
 from wtforms.fields.simple import TextAreaField
 from wtforms.validators import DataRequired,Length
 
@@ -31,3 +31,8 @@ class LDiarioForm(FlaskForm):
 class PartidaForm(FlaskForm):
     nombre = StringField('Nombre partida', validators=[DataRequired(), Length(max=200)], render_kw={ "type":"text" ,"class":"form-control" ,"id":"ldiarioform",'required':''})
     fecha = DateField('Fecha')
+
+class PConceptoForm(FlaskForm):
+    id_cuenta= SelectField('Cuenta', choices=[],render_kw={'class':'custom-select'})
+    valor_parcial= FloatField('Parcial')
+    cargo_abono = BooleanField('Cargo-Abono')

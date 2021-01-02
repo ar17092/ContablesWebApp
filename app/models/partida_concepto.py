@@ -7,12 +7,14 @@ class Partida_Concepto(db.Model):
     valor_parcial=db.Column(db.Float)
     id_cuenta = db.Column(db.Integer, db.ForeignKey('cuenta.id_cuenta', ondelete='set null'))
     id_partida = db.Column(db.Integer, db.ForeignKey('partida.id_partida', ondelete='set null'))
+    cargo_abono = db.Column(db.BOOLEAN, default=False) #True =debe; False =haber
+    cuenta = db.relationship('Cuenta', backref='cuenta', lazy=True)
 
     def __repr__(self):
         return f'Partida_Concepto {self.id_pconcepto}'
 
     def save(self):
-        if not self.id_libro_diario:
+        if not self.id_pconcepto:
             db.session.add(self)
         db.session.commit()
 

@@ -7,6 +7,7 @@ class Partida(db.Model):
     valor_debe = db.Column(db.Float)
     valor_haber = db.Column(db.Float)
     id_ldiario = db.Column(db.Integer, db.ForeignKey('libro__diario.id_libro_diario', ondelete='cascade'))
+    pconceptos=db.relationship('Partida_Concepto', backref='partida_concepto', lazy=True, cascade='all, delete-orphan')
 
     def __repr__(self):
         return f'<Partida {self.nombre}>'
@@ -27,7 +28,11 @@ class Partida(db.Model):
     @staticmethod
     def get_by_id(id):
         return Partida.query.get(id)
-    
+
+    @staticmethod
+    def get_by_nombre(nombre):
+        return Partida.query.filter_by(nombre=nombre).first()
+
     @staticmethod
     def get_by_id_ldiario(id_ldiario):
         return Partida.query.filter_by(id_ldiario=id_ldiario)
