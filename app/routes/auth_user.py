@@ -87,7 +87,6 @@ def profile(username):
     form1 = EmpresaForm()
     form1.id_rubro.choices=[(r.id_rubro, r.rubro) for r in rb]
     form2 = RubroForm()
-    print('Apunto de entrar a form1')
     if form1.validate_on_submit():
         nombre_empresa = form1.name.data
         id_rb = form1.id_rubro.data
@@ -98,10 +97,9 @@ def profile(username):
         user.save()
         
         return redirect(url_for('routes.profile', username=current_user.username))
-    print('Apunto de entrar a form2')
+        
     if form2.validate_on_submit():
         nombre_rubro = form2.name.data
-        print('Valor del rubro ',nombre_rubro)
         rubro = Rubro(rubro=nombre_rubro)
         rubro.save()
 

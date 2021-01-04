@@ -70,8 +70,8 @@
                             <tr>
                                 <th scope="col">{{p.fecha}}</th>
                                 <th scope="col">{{p.nombre}}</th>
-                                <th scope="col">$ {{p.valor_debe}}</th>
-                                <th scope="col">$ {{p.valor_haber}}</th>
+                                <th scope="col" class="">$ {{p.valor_debe}}</th>
+                                <th scope="col" class="" >$ {{p.valor_haber}}</th>
                                 <th scope="col"><a href="{{url_for('routes.add_partida', nombre=p.nombre)}}" class="btn btn-warning"><i class="fas fa-arrow-circle-right"></i></a></th>
                             </tr>
                             {% endfor %}

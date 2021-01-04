@@ -1,5 +1,6 @@
 from flask import render_template, redirect, url_for, request
 from flask_login import login_required, current_user
+from werkzeug.exceptions import abort
 from . import bp
 from app.models.libro_diario import Libro_Diario
 from app.models.usuario import User
@@ -61,12 +62,54 @@ def add_partida(nombre):
         pc=Partida_Concepto(valor_parcial=parcial,id_cuenta=id_cuenta,id_partida=id_p,cargo_abono=c_a)
         pc.save()
 
-        print("NUMERO FLOTANTE",parcial)
-        return redirect(url_for('routes.librodiario'))
+        return redirect(url_for('routes.add_partida', nombre=partida.nombre ))
 
     return render_template('user/partidas.html',partida=partida, form=form)
 
 @bp.route('/librodiario/update/<int:id>', methods=['GET','POST'])
 @login_required
-def update_partida(id):
-    return render_template('user/partidas.html')
+def update_c_partida(id):
+    partida_concepto = Partida_Concepto.get_by_id(id)
+    partida = Partida.get_by_id(partida_concepto.id_partida)
+    cuentas = Cuenta.get_all()
+    if partida_concepto is None:
+        abort(404)
+
+    if partida_concepto.cargo_abono:
+        partida.valor_debe -=partida_concepto.valor_parcial
+    else:
+        partida.valor_haber -=partida_concepto.valor_parcial
+    
+    form=PConceptoForm(obj=partida_concepto)
+    form.id_cuenta.choices=[(c.id_cuenta, c.nombre) for c in cuentas]
+    if form.validate_on_submit():
+        partida_concepto.valor_parcial = form.valor_parcial.data
+        partida_concepto.cargo_abono=form.cargo_abono.data
+        partida_concepto.id_cuenta=form.id_cuenta.data
+
+        if form.cargo_abono.data:
+            partida.valor_debe += form.valor_parcial.data
+        else:
+            partida.valor_haber += form.valor_parcial.data
+        partida_concepto.save()
+        partida.save()
+
+
+    return render_template('user/partidas.html',partida=partida, form=form, partida_concepto=partida_concepto)
+
+@bp.route('/librodiario/delete/<int:id_partida_concepto>', methods=['POST',])
+@login_required
+def delete_partida_concepto(id_partida_concepto):
+    partida_concepto=Partida_Concepto.get_by_id(id_partida_concepto)
+    if partida_concepto is None:
+        abort(404)
+    id_p=partida_concepto.id_partida
+    parcial= partida_concepto.valor_parcial
+    partida = Partida.get_by_id(id_p)
+    if partida_concepto.cargo_abono:
+        partida.valor_debe -=parcial
+    else:
+        partida.valor_haber -=parcial
+    partida_concepto.delete()
+    partida.save()
+    return redirect(url_for('routes.add_partida', nombre=partida.nombre))

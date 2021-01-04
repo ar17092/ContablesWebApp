@@ -34,6 +34,14 @@
                                     </div>
                                     <button class="btn btn-success"><i class="fas fa-plus-square"></i> Agregar</button>
                                 </form>
+                                    {% if partida_concepto %}
+                                    <div class="">
+                                        <form action="{{ url_for('routes.delete_partida_concepto', id_partida_concepto=partida_concepto.id_pconcepto) }}" method="post">
+                                            <br>
+                                            <button class="btn btn-danger " type="submit" href="{{url_for('routes.new_cuenta')}}"><i class="fas fa-trash-alt"></i> Eliminar</button>
+                                        </form>
+                                    </div>
+                                    {% endif %}
                             </div>
                         </div>
                     </div>
@@ -59,10 +67,19 @@
                                 <th scope="col">${{ pc.valor_parcial }}</th>
                                 <th scope="col">{% if pc.cargo_abono %}$ {{ pc.valor_parcial }}{% else %}$ -{% endif %}</th>
                                 <th scope="col">{% if not pc.cargo_abono %}$ {{ pc.valor_parcial }}{% else %}$ -{% endif %}</th>
-                                <th scope="col"><a class="btn btn-warning"><i class="far fa-edit"></i></a></th>
+                                <th scope="col"><a class="btn btn-warning" href="{{url_for('routes.update_c_partida', id=pc.id_pconcepto)}}"><i class="far fa-edit"></i></a></th>
                             </tr>
                         {% endfor %}
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th scope="col">Total</th>
+                                <th scope="col"></th>
+                                <th scope="col" class="debe">$ {{partida.valor_debe}}</th>
+                                <th scope="col" class="haber" >$ {{partida.valor_haber}}</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
