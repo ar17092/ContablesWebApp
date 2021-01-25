@@ -8,8 +8,9 @@
 <div class="card text-dark">
   <h5 class="card-header text-dark">Empresa de {{user.nombre}}</h5>
   <div class="card-body">
+    {% if user.empresa.nombre %}
     <h5 class="card-title"><a href="{{url_for('routes.librodiario')}}" class="list-group-item list-group-item-action bg-secondary text-white">{{ user.empresa.nombre }}</a></h5>
-    {% if not user.empresa.nombre %}
+    {%else%}
     <a class="btn btn-primary" data-toggle="collapse" href="#mynewcompany" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Agregar empresa</a>
     {% endif %}
       <div class="collapse multi-collapse" id="mynewcompany">
@@ -76,4 +77,12 @@
 </div>
 </div>
 {% endif %}
+<style>
+    footer{
+        position:fixed;
+        left:0px;
+        bottom:0px;
+        width:100%;
+    }
+  </style>
 {% endblock %}

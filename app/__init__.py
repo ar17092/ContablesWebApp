@@ -3,9 +3,10 @@ import logging
 from flask import Flask, render_template
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_toastr import Toastr
 
 login_manager = LoginManager()
-
+toastr = Toastr()
 db = SQLAlchemy()
 migrate = Migrate()
 
@@ -26,7 +27,7 @@ def create_app(settings_module):
 
     #Iniciamos la db
     db.init_app(app)
-
+    toastr.init_app(app)
     migrate.init_app(app, db)
 
     from .routes import bp

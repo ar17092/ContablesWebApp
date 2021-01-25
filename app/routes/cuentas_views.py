@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, flash
 from flask.helpers import url_for
 from flask_login import login_required, current_user
 from werkzeug.exceptions import abort
@@ -35,6 +35,7 @@ def new_cuenta():
 
         cuenta = Cuenta(nombre=nombre, descripcion=info, id_tipocuenta=id_tc)
         cuenta.save()
+        flash("Cuenta agregada con éxito",'success')
         return redirect(url_for('routes.new_cuenta'))      
     return render_template('admin/cuenta.html', form=form,cuentas=cuentas)
 
@@ -54,6 +55,7 @@ def update_cuenta(id_cuenta):
         cuenta.descripcion = form.descripcion.data
         cuenta.id_tipocuenta = form.id_tipocuenta.data
         cuenta.save()
+        flash("Cuenta actualizada con éxito",'info')
         return redirect(url_for('routes.new_cuenta'))
     return render_template('admin/cuenta.html',form=form, cuenta = cuenta,cuentas=cuentas)
 
@@ -65,7 +67,7 @@ def delete_cuenta(id_cuenta):
     if cuenta is None:
         abort(404)
     cuenta.delete()
-
+    flash("Cuenta eliminada ",'info')
     return redirect(url_for('routes.new_cuenta'))
 
 #-------------------------------------------------------------------------------------------------------------------------------------------#
@@ -88,6 +90,7 @@ def new_subcuenta():
 
         subcuenta = Subcuenta(nombre=nombre, descripcion=info, id_cuenta=id_c)
         subcuenta.save()
+        flash("Subcuenta agregada con éxito",'success')
         return redirect(url_for('routes.new_subcuenta'))      
     return render_template('admin/subcuenta.html', form=form,subcuentas=subcuentas)
 
@@ -107,6 +110,7 @@ def update_subcuenta(id_subcuenta):
         subcuenta.descripcion = form.descripcion.data
         subcuenta.id_tipocuenta = form.id_cuenta.data
         subcuenta.save()
+        flash("Subcuenta actualizada con éxito",'info')
         return redirect(url_for('routes.new_subcuenta'))
     return render_template('admin/subcuenta.html',form=form, subcuenta = subcuenta,subcuentas=subcuentas)
 
@@ -118,7 +122,7 @@ def delete_subcuenta(id_subcuenta):
     if subcuenta is None:
         abort(404)
     subcuenta.delete()
-
+    flash("Subcuenta eliminada",'info')
     return redirect(url_for('routes.new_subcuenta'))
 
 #-------------------------------------------------------------------------------------------------------------------------------------------#
@@ -137,6 +141,7 @@ def crud_tipocuenta():
         saldo = form.saldo.data
         tipo_cuenta = Tipo_Cuenta(nombre=nombre, saldo=saldo)
         tipo_cuenta.save()
+        flash("Tipo cuenta agregada con éxito",'success')
         return redirect(url_for('routes.crud_tipocuenta'))
     return render_template('admin/tipocuenta.html', form =form,tipos_cuenta=tipos_cuenta )
 
@@ -155,7 +160,8 @@ def update_tipocuenta(id_tipo_cuenta):
         tipo_cuenta.descripcion = form.descripcion.data
         tipo_cuenta.saldo = form.saldo.data
         tipo_cuenta.save()
-        return redirect(url_for('routes.home'))
+        flash("Tipo cuenta actualizada con éxito",'info')
+        return redirect(url_for('routes.crud_tipocuenta'))
     return render_template('admin/tipocuenta.html',form=form, tipo_cuenta = tipo_cuenta,tipos_cuenta=tipos_cuenta)
 
 @bp.route('/admin/deletetipocuenta/<int:id_tipo_cuenta>', methods=['POST',])
@@ -166,5 +172,5 @@ def delete_tipo_cuenta(id_tipo_cuenta):
     if tipo_cuenta is None:
         abort(404)
     tipo_cuenta.delete()
-
+    flash("Tipo cuenta elimada",'info')
     return redirect(url_for('routes.crud_tipocuenta'))

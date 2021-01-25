@@ -3,9 +3,17 @@
 {% block title %}ADMIN{% endblock %}
 
 {% block content %}
-
-<div class="container bg-white text-dark">
+<br><br>
+<div class="container text-dark">
     <a href="" class="btn btn-secondary">{{current_user.nombre}}</a>
 </div>
+<style>
+    footer{
+        position:fixed;
+        left:0px;
+        bottom:0px;
+        width:100%;
+    }
+  </style>
 
 {% endblock %}

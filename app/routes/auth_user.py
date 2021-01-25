@@ -12,7 +12,7 @@ from app import login_manager
 @bp.route('/signup', methods=['GET','POST'])
 def signup_form():
     # form = SignupForm()
-    error = None
+
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     
@@ -25,7 +25,7 @@ def signup_form():
     
         user = User.get_by_userName(username)
         if user is not None:
-            error= f'El username {username} ya esta siendo utilizado por otro usuario'
+            flash("El username {usernombre} ya esta registrado".format(usernombre=username), 'error')
         else:
                 #Agregamos al usuario
                 #user.check_password(password)
@@ -37,9 +37,10 @@ def signup_form():
                 siguienteP= request.args.get('next', None)
                 if not siguienteP or url_parse(siguienteP).netloc != '':
                     siguienteP = url_for('routes.index')
+                flash("Welcome {nombre}".format(nombre=user.nombre), 'success')
                 return redirect(siguienteP)
 
-    return render_template('auth/signup.html', error=error)
+    return render_template('auth/signup.html')
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -59,15 +60,17 @@ def login():
 
             if not siguientePag or url_parse(siguientePag).netloc != '':
                 siguientePag= url_for('routes.index')
+            flash("Welcome {usuario}".format(usuario=user.nombre),'success')
             return redirect(siguientePag)
         else:
-            error = f'Username o contraseña incorretos'
+            flash("Username o contraseña incorrectos",'error')
 
-    return render_template('auth/login.html', error=error)
+    return render_template('auth/login.html')
 
 @bp.route('/logout')
 def logout():
     logout_user()
+    flash("Adios, vuelve pronto",'info')
     return redirect(url_for('routes.index'))
 
 #Obteniendo el id del usuario con sesión activa
@@ -95,14 +98,14 @@ def profile(username):
         empresa.save()
         user.empresa_id = empresa.id_empresa
         user.save()
-        
+        flash("Empresa agregada exitosamente",'success')
         return redirect(url_for('routes.profile', username=current_user.username))
         
     if form2.validate_on_submit():
         nombre_rubro = form2.name.data
         rubro = Rubro(rubro=nombre_rubro)
         rubro.save()
-
+        flash("Rubro agregado",'info')
         return redirect(url_for('routes.profile', username = user.username))
 
     return render_template('user/profile.html',user=user,form1=form1, form2=form2,empresa=empresa)

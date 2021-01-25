@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from werkzeug.exceptions import abort
 from . import bp
@@ -23,7 +23,7 @@ def librodiario():
         
         ldiario = Libro_Diario(nombre=name, descripcion = info, id_user = id_usuario)
         ldiario.save()
-
+        flash("Libro diario agregado con éxito", 'success')
         return redirect(url_for('routes.librodiario'))
     
     form2=PartidaForm()
@@ -34,6 +34,7 @@ def librodiario():
         fecha = request.form['fecha']
         partida = Partida(fecha=fecha,nombre = nombre_partida,valor_debe=0,valor_haber=0, id_ldiario=id_ldiario)
         partida.save()
+        flash("Partida creada",'info')
         return redirect(url_for('routes.librodiario'))
     libro = Libro_Diario.get_by_id_user(current_user.id)
 
@@ -61,7 +62,7 @@ def add_partida(nombre):
 
         pc=Partida_Concepto(valor_parcial=parcial,id_cuenta=id_cuenta,id_partida=id_p,cargo_abono=c_a)
         pc.save()
-
+        flash("Ok", 'success')
         return redirect(url_for('routes.add_partida', nombre=partida.nombre ))
 
     return render_template('user/partidas.html',partida=partida, form=form)
@@ -93,6 +94,7 @@ def update_c_partida(id):
             partida.valor_haber += form.valor_parcial.data
         partida_concepto.save()
         partida.save()
+        flash("Ok", 'success')
 
 
     return render_template('user/partidas.html',partida=partida, form=form, partida_concepto=partida_concepto)
@@ -112,4 +114,5 @@ def delete_partida_concepto(id_partida_concepto):
         partida.valor_haber -=parcial
     partida_concepto.delete()
     partida.save()
+    flash("Ok", 'info')
     return redirect(url_for('routes.add_partida', nombre=partida.nombre))

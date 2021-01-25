@@ -8,7 +8,7 @@
         <div class="col-sm-8">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-dark text-center "> Add Tipo cuenta</h5>
+                <h5 class="modal-title text-dark text-center "> Add Cuenta</h5>
             </div>
             <form method="post" >
                 {{form.hidden_tag()}}
@@ -58,10 +58,10 @@
     <div class="col-6 mt-4 ">
         <div class="col-xs-12 ">
         <div class="modal-content">
-            <h5 class="modal-title text-dark text-center">Subcuentas</h5>
+            <h5 class="modal-title text-dark text-center">Cuentas</h5>
             <div class="list-group p-3 mb-5 bg-muted rounded" >
                 <a href="#" class="list-group-item disabled text-dark " aria-disabled="true">
-                    Sub-cuentas existentes
+                    Cuentas existentes
                 </a>
                 <table class="table">
                     <thead class="thead-dark">
@@ -82,9 +82,11 @@
                         </tr>
                         {% endfor %}
                     </tbody>
+                </table>
             </div>
         </div>
         </div>
 </div>
 </div>
+
 {% endblock %}

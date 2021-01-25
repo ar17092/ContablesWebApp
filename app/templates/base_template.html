@@ -12,6 +12,9 @@
     <script src="https://kit.fontawesome.com/ca2bef8106.js" crossorigin="anonymous"></script>
     <script src="{{url_for('static', filename='js/script.js')}}"></script>
     <title>{% block title  %}  {% endblock %}</title>
+    {{ toastr.include_jquery() }}
+    {{ toastr.include_toastr_css() }}
+    {{ toastr.message() }}
 </head>
 <body class="text-light">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -56,6 +59,9 @@
       {% endif %}
     </div>
   </nav>
+  {{ toastr.include_toastr_js() }}
+  {% with messages = get_flashed_messages() %}
+  {% endwith %}
   {% if current_user.is_admin %}
   <div class="container mt-4  ">
     <div class="btn-group">
@@ -72,8 +78,35 @@
 {% endif %}
       {% block content %}
       {% endblock %}
-      <footer class="page-footer font-small blue mt-5" >
-        <div class="footer-copyright text-center py-3">© 2020 Copyright
+      <br>
+      <footer class="bg-light text-dark">
+        <div class="container">
+            <nav class="row">
+                <div class="col-3 text-reset d-flex align-items-center">
+                  <ul class="list-unstyled">
+                    <li class="d-flex justify-content-between">
+                      <br>
+                      <li class="text-reset">Alejandro Aragón</li>
+                      <li class="text-reset">Jaime Navas</li>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-3 text-reset d-flex align-items-center">
+                </div>
+                <div class="col-3 text-reset d-flex align-items-center">
+                    © 2021 Copyright
+                </div>
+                <ul class="col-3 list-unstyled">
+                  <br>
+                    <li class="text-center">Social networks</li>
+                    <li class="d-flex justify-content-between">
+                        <a href="https://github.com/" class="text-reset"><i class="fab fa-github"></i></a>
+                        <a href="https://instagram.com" class="text-reset"><i class="fab fa-instagram"></i></a>
+                        <a href="https://facebook.com" class="text-reset"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="text-reset"><i class="fab fa-twitter"></i></a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </footer>
 </body>
