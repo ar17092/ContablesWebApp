@@ -1,0 +1,6 @@
+WebApp desarrollada en python con el microframework Flask y mysql
+Integrantes: 
+
+Jaime Alejandro Navas Farfán 
+Alejandro José Aragón Rugamas
+
