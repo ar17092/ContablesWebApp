@@ -71,7 +71,7 @@ def login():
 def logout():
     logout_user()
     flash("Adios, vuelve pronto",'info')
-    return redirect(url_for('routes.index'))
+    return redirect(url_for('routes.login'))
 
 #Obteniendo el id del usuario con sesión activa
 @login_manager.user_loader

@@ -4,6 +4,7 @@ from werkzeug.exceptions import abort
 from . import bp
 from app.models.libro_diario import Libro_Diario
 from app.models.usuario import User
+from app.models.empresa import Empresa
 from app.forms.resgistros import LDiarioForm, PartidaForm
 from app.models.partida import Partida
 from app.models.partida_concepto import Partida_Concepto
@@ -25,12 +26,14 @@ def librodiario():
         ldiario.save()
         flash("Libro diario agregado con éxito", 'success')
         return redirect(url_for('routes.librodiario'))
-    
+
+    empresa = Empresa.get_by_id(current_user.empresa_id)
+    nombreE = empresa.nombre
     form2=PartidaForm()
     if form2.validate_on_submit():
         ldiario_user = Libro_Diario.get_by_id_user(current_user.id)
         id_ldiario =ldiario_user.id_libro_diario
-        nombre_partida = slugify(form2.nombre.data)
+        nombre_partida = slugify(nombreE+"-"+form2.nombre.data)
         fecha = request.form['fecha']
         partida = Partida(fecha=fecha,nombre = nombre_partida,valor_debe=0,valor_haber=0, id_ldiario=id_ldiario)
         partida.save()
@@ -95,6 +98,7 @@ def update_c_partida(id):
         partida_concepto.save()
         partida.save()
         flash("Ok", 'success')
+        return redirect(url_for('routes.add_partida', nombre=partida.nombre ))
 
 
     return render_template('user/partidas.html',partida=partida, form=form, partida_concepto=partida_concepto)

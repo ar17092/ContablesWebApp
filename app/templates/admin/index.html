@@ -3,10 +3,17 @@
 {% block title %}ADMIN{% endblock %}
 
 {% block content %}
-<br><br>
-<div class="container text-dark">
-    <a href="" class="btn btn-secondary">{{current_user.nombre}}</a>
+<div class="container mt-4">
+    <div class="list-group">
+        <a class="list-group-item list-group-item-action bg-dark disabled" aria-current="true">
+          Panel Catalogo de cuentas
+        </a>
+        <a href="{{url_for('routes.new_cuenta')}}" class="list-group-item list-group-item-action">Cuentas</a>
+        <a href="{{url_for('routes.new_subcuenta')}}" class="list-group-item list-group-item-action">Subcuentas</a>
+        <a href="{{url_for('routes.crud_tipocuenta')}}" class="list-group-item list-group-item-action">Tipo cuenta</a>
+      </div>
 </div>
+
 <style>
     footer{
         position:fixed;

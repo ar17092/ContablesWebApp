@@ -4,13 +4,13 @@
 
 {% block content %}
 <div class="container mt-4 text-dark">
-<a href="{{ url_for('routes.librodiario') }}" class="btn btn-primary"><i class="fas fa-arrow-alt-circle-left"></i></a>
+<a href="{{ url_for('routes.librodiario') }}" class="btn btn-light"><i class="fas fa-arrow-alt-circle-left"></i> Back</a>
 <br>
 <br>
-    <div class="card bg-light">
+    <div class="card">
 
         <div class="card-body row w-100 p-3 justify-content-around">
-            <div class="col-6 mt-4">
+            <div class="col-sm-6 mt-4">
                 <div class="col-sm-8">
                     <div class="modal-dialog">
                         <div class="modal-content bg-muted">
@@ -34,12 +34,13 @@
                                     </div>
                                     <button class="btn btn-success"><i class="fas fa-plus-square"></i> Agregar</button>
                                 </form>
+                                <hr>
                                     {% if partida_concepto %}
                                     <div class="">
-                                        <form action="{{ url_for('routes.delete_partida_concepto', id_partida_concepto=partida_concepto.id_pconcepto) }}" method="post">
-                                            <br>
+                                        <form class="my-2" action="{{ url_for('routes.delete_partida_concepto', id_partida_concepto=partida_concepto.id_pconcepto) }}" method="post">
                                             <button class="btn btn-danger " type="submit" href="{{url_for('routes.new_cuenta')}}"><i class="fas fa-trash-alt"></i> Eliminar</button>
                                         </form>
+                                        <a href="{{url_for('routes.add_partida', nombre=partida.nombre )}}" class="btn btn-secondary my-2"><i class="fas fa-check"></i> Hecho</a>
                                     </div>
                                     {% endif %}
                             </div>
@@ -47,10 +48,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 mt-4">
+            <div class="col-sm-6 mt-4">
                 <div class="col-xs-12">
-                <h5>{{ partida.fecha }}</h5>
-                    <table class="table">
+                    <span class="badge bg-dark text-white"> Fecha: {{ partida.fecha }}</span>
+                    <table class="table table-striped table-light">
                         <thead class="thead-dark">
                         <tr>
                             <th scope="col">Concepto</th>
@@ -63,21 +64,21 @@
                         <tbody>
                         {% for pc in partida.pconceptos %}
                             <tr>
-                                <th scope="col">{{ pc.cuenta.nombre }}</th>
-                                <th scope="col">${{ pc.valor_parcial }}</th>
-                                <th scope="col">{% if pc.cargo_abono %}$ {{ pc.valor_parcial }}{% else %}$ -{% endif %}</th>
-                                <th scope="col">{% if not pc.cargo_abono %}$ {{ pc.valor_parcial }}{% else %}$ -{% endif %}</th>
-                                <th scope="col"><a class="btn btn-warning" href="{{url_for('routes.update_c_partida', id=pc.id_pconcepto)}}"><i class="far fa-edit"></i></a></th>
+                                <td>{{ pc.cuenta.nombre }}</td>
+                                <td>${{ pc.valor_parcial }}</td>
+                                <td>{% if pc.cargo_abono %}$ {{ pc.valor_parcial }}{% else %}$ -{% endif %}</td>
+                                <td>{% if not pc.cargo_abono %}$ {{ pc.valor_parcial }}{% else %}$ -{% endif %}</td>
+                                <td><a class="btn btn-warning" href="{{url_for('routes.update_c_partida', id=pc.id_pconcepto)}}"><i class="far fa-edit"></i></a></td>
                             </tr>
                         {% endfor %}
                         </tbody>
                         <tfoot>
                             <tr>
                                 <th scope="col">Total</th>
-                                <th scope="col"></th>
+                                <td></td>
                                 <th scope="col" class="debe">$ {{partida.valor_debe}}</th>
                                 <th scope="col" class="haber" >$ {{partida.valor_haber}}</th>
-                                <th scope="col"></th>
+                                <td></td>
                             </tr>
                         </tfoot>
                     </table>

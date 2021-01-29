@@ -26,7 +26,7 @@ class RubroForm(FlaskForm):
 
 class LDiarioForm(FlaskForm):
     name = name = StringField('Nombre Libro Diario', validators=[DataRequired(), Length(max=200)], render_kw={ "type":"text" ,"class":"form-control" ,"id":"ldiarioform",'required':''})
-    descripcion = TextAreaField('Descripción', render_kw={'class':'form-control'})
+    descripcion = TextAreaField('Descripción', render_kw={'class':'form-control',"maxlength":"50"})
 
 class PartidaForm(FlaskForm):
     nombre = StringField('Nombre partida', validators=[DataRequired(), Length(max=200)], render_kw={ "type":"text" ,"class":"form-control" ,"id":"ldiarioform",'required':''})
